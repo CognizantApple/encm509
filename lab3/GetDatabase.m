@@ -1,37 +1,37 @@
 
-function [AuthSigs,ImposterSigs,MeanAuth,MeanImposter] = GetDatabase()
+function [AuthSigs,ForgSigs,MeanAuth,MeanForg] = GetDatabase()
     %Load Signatures
     AuthSigs            = load("AndyAuthSig.mat");
     AuthSigs            = struct2array(AuthSigs);
 
-    ImposterSigs        = load("ImposterSig.mat");
-    ImposterSigs        = struct2array(ImposterSigs);
-    
+    ForgSigs        = load("AndyForgSig.mat");
+    ForgSigs        = struct2array(ForgSigs);
+
     %Replace time with velocity.
     AuthSigs = GetVelocity(AuthSigs);
-    ImposterSigs = GetVelocity(ImposterSigs);
-    
+    ForgSigs = GetVelocity(ForgSigs);
+
     %Calculate Mean values from data
-    MeanAuth        = GetMeanValues(AuthSigs);
-    MeanImposter    = GetMeanValues(ImposterSigs);
+    MeanAuth    = GetMeanValues(AuthSigs);
+    MeanForg    = GetMeanValues(ForgSigs);
 end
 
 function [VelocitySignatures] = GetVelocity(TimeSignatures)
-    % Prepare a velocity return value.   
+    % Prepare a velocity return value.
     VelocitySignatures = TimeSignatures;
-    
+
     SingatureCount = length(TimeSignatures);
-    
+
     % Iterate over signatures and calculate velocity
     for i = 1 : SingatureCount
         SignatureIn = TimeSignatures(i);
         SignatureIn = SignatureIn{1};
         DataCount = length(SignatureIn(1, :));
-        
+
         XVel        = zeros(1, DataCount - 1);
         YVel        = zeros(1, DataCount - 1);
         Velocity    = zeros(1, DataCount - 1);
-        
+
         X = SignatureIn(1, :);
         Y = SignatureIn(2, :);
         Time = SignatureIn(4, :);
@@ -39,7 +39,7 @@ function [VelocitySignatures] = GetVelocity(TimeSignatures)
             dX = X(j) - X(j - 1);
             dY = Y(j) - Y(j - 1);
             dT = Time(j) - Time(j - 1);
-            
+
             XVel(j - 1, 1) = dX / dT;
             YVel(j - 1, 2) = dY / dT;
             Velocity(j - 1) = sqrt(dX * dX + dY * dY);
