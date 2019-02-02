@@ -87,8 +87,8 @@ if ~isstr(fun),
   
   % Attribution plot
   subplot('position',[ 0 0.05 0.45 0.9 ]);
-  plot(data(:,1),data(:,2),'y+');
-  set(gca,'xlim',[0 1000],'ylim',[0 3000],'dataaspectratio',[1 1 1], ...
+  plot(data(:,1),data(:,2),'b+');
+  set(gca,'xlim',[0 800],'ylim',[0 1000],'dataaspectratio',[1 1 1], ...
       'drawmode','fast');
   xlabel('F1 (Hz)'); ylabel('F2 (Hz)');
   grid on; hold on;
@@ -104,7 +104,7 @@ if ~isstr(fun),
   
   % Likelihood plot
   subplot('position',[ 0.51 0.5 0.45 0.45 ]);
-  hl = plot(0,NaN,'yo-');
+  hl = plot(0,NaN,'bo-');
   grid on;
   set(gca,'drawmode','fast');
   zoom on;

@@ -35,5 +35,9 @@ end
 gausplot(MeanAuth, mu_a, sigma_a, 'Authentic');
 gausplot(MeanForg, mu_f, sigma_f, 'Forged');
 
+% SECTION 3.2
+% Concatenate our data into a big list, and say we want 2 clusters.
+Yourdata = [ MeanAuth; MeanForg ];
+emalgo(Yourdata,2);
 
 
