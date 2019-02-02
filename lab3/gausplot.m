@@ -1,4 +1,4 @@
-function fig = gausplot(x,mu,sigma,title,rangeX,rangeY);
+function fig = gausplot(x,mu,sigma,title,rangeX,rangeY,maxZ,aspectRatioZ, aspectRatioY);
 
 % GAUSVIEW 2D Gaussian densities exploration tool
 %
@@ -10,6 +10,8 @@ function fig = gausplot(x,mu,sigma,title,rangeX,rangeY);
 %  Buttons allow you to switch between 2D and 3D view, to edit the axes,
 %   and to switch on/switch of the different views of the data (cloud of
 %   points, mesh and contour plot).
+%
+%  NOTE: Edited to access z range and aspect ratio
 %
 
 if nargin < 2, mu = mean(x); end;
@@ -29,8 +31,8 @@ colordef white;
 % Make plots
 set(gca,'xlim', [rangeX(1) rangeX(end)], ...
         'ylim', [rangeY(1) rangeY(end)], ...
-        'zlim', [0 2.5e-5], ...
-	'dataAspectRatio', [1 1 1e-8] );
+        'zlim', [0 maxZ], ...
+	'dataAspectRatio', [1 aspectRatioY aspectRatioZ] );
 pos = get(gca,'position'); pos(1) = pos(1) - 0.1; 
 set(gca,'position',pos);
 hold on;
