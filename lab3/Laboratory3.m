@@ -21,14 +21,19 @@ title('Class Points and Gaussians');
 % SECTION 2.2
 % Compute the prior probabilities for the authentic and forged classes
 N = size(MeanAuth,1) + size(MeanForg,1)
-p_a =  size(MeanAuth,1)/N
-p_f =  size(MeanForg,1)/N
+Pa =  size(MeanAuth,1)/N
+Pf =  size(MeanForg,1)/N
 
+% Compute the posterior probabilities for each class
 
+for i = 1:length(MeanAuth(:,1))
+    aglog(i) = gloglike(MeanAuth(i), mu_a, sigma_a) + log(Pa);
+    fglog(i) = gloglike(MeanForg(i), mu_a, sigma_a) + log(Pa);
+end
 
-
-
-
+% Plot the authentic and forged signatures???
+gausplot(MeanAuth, mu_a, sigma_a, 'Authentic');
+gausplot(MeanForg, mu_f, sigma_f, 'Forged');
 
 
 
