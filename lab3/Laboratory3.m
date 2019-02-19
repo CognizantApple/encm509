@@ -26,7 +26,7 @@ Pf =  size(MeanForg,1)/N;
 
 % Compute the posterior probabilities for each class
 aglog = zeros(1,length(MeanAuth(:,1)));
-fglog = zeros(1,length(MeanAuth(:,1)));
+fglog = zeros(1,length(MeanAuth(y:,1)));
 for i = 1:length(MeanAuth(:,1))
     aglog(i) = gloglike(MeanAuth(i), mu_a, sigma_a) + log(Pa);
     fglog(i) = gloglike(MeanForg(i), mu_a, sigma_a) + log(Pa);
@@ -39,6 +39,6 @@ gausplot(MeanForg, mu_f, sigma_f, 'Forged', 50:2:250, 1:0.5:50, 2.0e-3, 1e-5, 0.
 % SECTION 3.2
 % Concatenate our data into a big list, and say we want 2 clusters.
 Yourdata = [ MeanAuth; MeanForg ];
-%emalgo(Yourdata,2);
+emalgo(Yourdata,2);
 
 
