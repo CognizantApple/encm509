@@ -17,7 +17,7 @@ function Fp = computelocalfrequency(Fp, im);
 %                spatial frequency
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-border = 15; %prevents from calculating the frequencies too close from the border of the image
+border = 30; %prevents from calculating the frequencies too close from the border of the image
 %%%step = max(round(size(im, 2)/8), 50);
 step = max(round(size(im, 2)/16), 40);
 
