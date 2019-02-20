@@ -10,7 +10,7 @@ function Fp = computeorientationarray(Fp)
 im=Fp.imOrig;
 contour = Fp.imSegmented;
 
-blkSize = 10;
+blkSize = 20;
 
 [fx, fy] = gradient(double(im));
 orientationArray = zeros(size(im) - 2 * blkSize);
