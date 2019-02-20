@@ -5,14 +5,16 @@ close all
 
 % Lab4Fingerprint1Auto(PatrickThumbs{22}, "img/22_Default/skeleton_1");
 % Lab4Fingerprint1Auto(PatrickThumbs{27}, "img/27_Default/skeleton_1");
+Exercise_1 = false;
+Exercise_2 = false;
+Exercise_3 = false;
 
 %----------------------------------------------------------------------
 %----------------------- MATCHING EXERCISE 1 --------------------------
 %----------------------------------------------------------------------
-Exercise_1 = false;
 if(Exercise_1)
     %----------------------------------------------------------------------
-    %-------- Select fingerprint 1
+    %-------- Select probe fingerprint
     %----------------------------------------------------------------------
     % Let's use Andy's 16th print as the probe.
     img = AndyThumbs{16};
@@ -25,14 +27,13 @@ if(Exercise_1)
     for i = 1:9
         j = i + starting_idx - 1;
         %----------------------------------------------------------------------
-        %-------- Select fingerprint 2
+        %-------- Select comparison fingerprint
         %----------------------------------------------------------------------
         img = AndyThumbs{j};
         Fp2 = PreProcess(img);
 
         %----------------------------------------------------------------------
         %---- Fingerprint comparison using two methods: Gabor and local matching
-        %
         %----------------------------------------------------------------------
         Score1 = MatchGaborFeat(Fp1,Fp2);
         fprintf('Score 1 for print %d using Gabor features: %1.2g\n', i, Score1);
@@ -53,10 +54,9 @@ end
 %----------------------------------------------------------------------
 %----------------------- MATCHING EXERCISE 2 --------------------------
 %----------------------------------------------------------------------
-Exercise_2 = true;
 if(Exercise_2)
     %----------------------------------------------------------------------
-    %-------- Select fingerprint 1
+    %-------- Select probe fingerprint
     %----------------------------------------------------------------------
     % Let's use Andy's 16th print as the probe.
     probe = PreProcess(AndyThumbs{16});
@@ -67,7 +67,7 @@ if(Exercise_2)
 
     j = 2
     for i = 1:30
-        % Grab some of Patrick's thumbs
+        % Grab 10 of Patrick's thumbs
         fprintf('Processing and aligning print number %d\n', i);
         img2 = PreProcess(PatrickThumbs{i});
         % Try and align the image, I suppose
@@ -101,6 +101,69 @@ if(Exercise_2)
     MinutiaScores = MinutiaScores'
 end
 
+%----------------------------------------------------------------------
+%----------------------- MATCHING EXERCISE 3 --------------------------
+%----------------------------------------------------------------------
+if(Exercise_3)
+    %----------------------------------------------------------------------
+    %-------- Select probe fingerprint
+    %----------------------------------------------------------------------
+    % Let's use Andy's 16th print as the probe.
+    probe = PreProcess(AndyThumbs{16});
+
+    % Set up our little database, with 9 of Andy's prints at the start
+    j = 1
+    % Grab 9 of Andy's thumbs
+    for i = 17:30
+        fprintf('Processing and aligning Andys print number %d\n', i);
+        img2 = PreProcess(AndyThumbs{i});
+        % Align the image
+        try
+            img2 = align2(probe,img2);
+            database_images{j} = img2;
+            j = j + 1;
+            if(j == 10)
+                break;
+            end
+        catch ME
+            fprintf('Could not align Andy print number %d\n', i);
+        end
+    end
+
+    % Grab 10 of Patrick's thumbs
+    for i = 1:30
+        fprintf('Processing and aligning Patricks print number %d\n', i);
+        img2 = PreProcess(PatrickThumbs{i});
+        % Try and align the image, I suppose
+        try
+            img2 = align2(probe,img2);
+            database_images{j} = img2;
+            j = j + 1;
+            if(j == 20)
+                break;
+            end
+        catch ME
+            fprintf('Could not align Patricks print number %d\n', i);
+        end
+    end
+
+    MinutiaScores = {19,1};
+
+    for i = 1:19
+        %----------------------------------------------------------------------
+        %---- Fingerprint comparison using... local matching.
+        %----------------------------------------------------------------------
+
+        threshold2=12; % Using 12, as it was arbitrarily suggested in Lab5Fingerprint2.m
+
+        img2=align2(probe,database_images{i});
+        Score_m=match(probe.minutiaArray, img2.minutiaArrayAlign, probe.imSkeleton, img2.imSkeletonAlign,threshold2);
+        fprintf('Score for print %d for minutiae : %1.2g\n', i, Score_m);
+        MinutiaScores{i} = Score_m;
+    end
+    % Lazy way to print the scores and get them in a column
+    MinutiaScores = MinutiaScores'
+end
 
 function [output_image] = PreProcess(input_image)
     %%% this function pre-processes an image before being scored for matching,
