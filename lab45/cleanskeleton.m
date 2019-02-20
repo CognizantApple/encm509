@@ -49,7 +49,7 @@ Cs.skeleton = padarray(Cs.skeleton, [25 25], 1, 'both');
 skeleton = Cs.skeleton;
 
 % For section 2.1.9, change to 10 or 1!
-blkSize_factor = 5
+blkSize_factor = 5;
 
 for i = 1:blkSize_factor
     blkSize = round(Cs.holeBlkSize/i);
