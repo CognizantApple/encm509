@@ -70,9 +70,9 @@ if(step2)
     % Find the mean and std of the max distances:
     mean_max = mean(max_distances);
     std_max = std(max_distances);
-    threshold1 = mean_max;
+    threshold1 = mean_max - std_max; % If you *add* std_max, it ends up being way too high...
 else
-    threshold1 = 4.31e+04; % this may work well as a threshold...
+    threshold1 = 4.300778919345922e+04; % Same value as above
 end
 %%%%%%%%%%%%%%% STEP 3 - FIND THRESHOLD #2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -89,9 +89,6 @@ if(step3)
         imposter_max_distances = [imposter_max_distances; max(imposter_distances{i})]; % maximum eucledian distance
         imposter_min_distances = [imposter_min_distances; min(imposter_distances{i})]; % minimum eucledian distance
     end
-    % Transpose for easy reading
-    imposter_min_distances = imposter_min_distances';
-    imposter_max_distances = imposter_max_distances';
 
     % Find the mean and std of the max distances:
     mean_max = mean(imposter_max_distances);
@@ -131,7 +128,7 @@ end
 
 disp('For faces NOT in the database:');
 % note that we can still use imposter_distances here.
-for i=1:size(imposter_min_distances, 2)
+for i=1:size(imposter_min_distances, 1)
     rank1_distance = imposter_min_distances(i);
     if (rank1_distance <= threshold1)
     disp('Image is in the database');
@@ -142,7 +139,8 @@ for i=1:size(imposter_min_distances, 2)
     end
 end
 
-%TODO: RANK-3 APPROACH
+%TODO: RANK-3 APPROACH -- Utilize in_db_distances and imposter_distances
+%for this.
 
 %%% Since the test database has to compute it's mean image and eigenvector every time,
 %%% We'll just run the whole program over when we want to change the db we're wanting to use.
@@ -154,7 +152,7 @@ function [distances] = FacialRecognition(image_db, test_images, thres1, thres2)
     image_means = [];
     image_stds = [];
 
-    plot_stuff = true;
+    plot_stuff = false;
 
     M = size(image_db,2);
     S = [];
