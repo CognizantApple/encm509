@@ -34,11 +34,11 @@ end
 
 %%% You can specify your directory here, please, change the string below:
 current_file_path = pwd;
-path = fullfile(current_file_path, 'RealFaces', '\')
+path = fullfile(current_file_path, 'RealFaces', '\');
 for i=1:M
     for j=1:C
         str=strcat(path,classes(j),int2str(i),'.jpg'); % concatenates strings that form the name of the image
-        eval('img=imread(str);');
+        img=imread(str);
         Image_Sets{j}{i} = img;
     end
 end
@@ -139,8 +139,84 @@ for i=1:size(imposter_min_distances, 1)
     end
 end
 
-%TODO: RANK-3 APPROACH -- Utilize in_db_distances and imposter_distances
+%RANK-3 Approach, we already have all the scores we need: in_db_distances and imposter_distances
 %for this.
+ranks = 3;
+disp('For faces in the database, using a rank-3 approach:');
+for i=1:size(in_db_distances, 2)
+    distances = in_db_distances{i};
+    
+    winner = RankNMatch(distances, ranks, threshold1, threshold2);
+    
+    if (winner == 1)
+        disp('Image is in the database');
+    elseif (winner == 2)
+        disp('Image is a face but not in the database');
+    elseif (winner == 3)
+        disp('Image is not a face');
+    end
+end
+
+disp('For faces not in the database, using a rank-3 approach:');
+for i=1:size(imposter_distances, 2)
+    distances = imposter_distances{i};
+    
+    winner = RankNMatch(distances, ranks, threshold1, threshold2);
+    
+    if (winner == 1)
+        disp('Image is in the database');
+    elseif (winner == 2)
+        disp('Image is a face but not in the database');
+    elseif (winner == 3)
+        disp('Image is not a face');
+    end
+end
+
+function [winner] = RankNMatch(distances, N, threshold1, threshold2)
+    distances = sort(distances);
+    
+    votes = zeros(3, 1);
+    
+    for j = 1:N
+        if j > size(distances)
+            break;
+        end
+        
+        distance = distances(j);
+        
+        if (distance <= threshold1)
+            votes(1) = votes(1) + 1;
+        elseif (distance <= threshold2)
+            votes(2) = votes(2) + 1;
+        else
+            votes(3) = votes(3) + 1;
+        end
+    end
+    
+    %now to analyze the votes
+    %find all the possible winners
+    top_votes = max(votes);
+    top_indexes = [];
+    for j = 1: 3
+        if top_votes == votes(j)
+            top_indexes = [top_indexes, j];
+        end
+    end
+    
+    %now find the mean index of categories that scores the maximum votes
+    mean_index = mean(top_indexes);
+    
+    %now find the index that is closest to the mean that also scored the
+    %max score
+    winner = 0;
+    winner_dist = 1e100;
+    for j = 1: 3
+        if top_votes == votes(j) && abs(j - mean_index) < winner_dist
+            winner = j;
+            winner_dist = abs(j - mean_index);
+        end
+    end
+end
 
 %%% Since the test database has to compute it's mean image and eigenvector every time,
 %%% We'll just run the whole program over when we want to change the db we're wanting to use.
@@ -170,7 +246,7 @@ function [distances] = FacialRecognition(image_db, test_images, thres1, thres2)
         end
         image_means = [image_means mean2(img)];
         image_stds = [image_stds std2(img)];
-        [irow icol]=size(img); % get the number of rows (N1) and columns (N2)
+        [irow, icol]=size(img); % get the number of rows (N1) and columns (N2)
         temp=reshape(img',irow*icol,1); % creates a (N1*N2)x1 vector
         S=[S temp]; % The image set is a N1*N2xM matrix after finishing the sequence
     end
