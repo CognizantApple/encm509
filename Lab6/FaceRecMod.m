@@ -22,8 +22,8 @@ M=9;  %M could be large (for example, 16: 8 of yours and 8 of a friend)
 
 % number of classes to train
 C=3;
-% in an effort to make the scores make more sense, have B and C be in the
-% db.
+% in an effort to make the scores make more sense, have B and C be in the db.
+% The third class in this array is the "imposter".
 classes = ['B' 'C' 'A'];
 
 % Create datatype for holding image
@@ -57,8 +57,8 @@ if(step2)
             test_img = {db{i}};
             db(i) = []; % This deletes the image we're testing with from the db.
             [distances] = FacialRecognition(db, test_img);
-            max_distance = max(distances{1}) % maximum eucledian distance
-            min_distance = min(distances{1}) % minimum eucledian distance
+            max_distance = max(distances{1}); % maximum eucledian distance
+            min_distance = min(distances{1}); % minimum eucledian distance
             min_distances = [min_distances, min_distance];
             max_distances = [max_distances, max_distance];
         end
@@ -72,7 +72,7 @@ if(step2)
     std_max = std(max_distances);
     threshold1 = mean_max;
 else
-    threshold1 = 4.379330980085595e+04;
+    threshold1 = 4.31e+04; % this may work well as a threshold...
 end
 %%%%%%%%%%%%%%% STEP 3 - FIND THRESHOLD #2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -117,23 +117,25 @@ for j=1:2
     end
 end
 
+disp('For faces in the database:');
 for i=1:size(in_db_distances, 2)
     rank1_distance = min(in_db_distances{i});
     if (rank1_distance <= threshold1)
     disp('Image is in the database');
-    elseif (rank1_distance > threshold1 && mean_of_distances <= threshold2)
+    elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
     disp('Image is a face but not in the database');
     elseif (rank1_distance > threshold2)
     disp('Image is not a face');
     end
 end
 
+disp('For faces NOT in the database:');
 % note that we can still use imposter_distances here.
 for i=1:size(imposter_min_distances, 2)
     rank1_distance = imposter_min_distances(i);
     if (rank1_distance <= threshold1)
     disp('Image is in the database');
-    elseif (rank1_distance > threshold1 && mean_of_distances <= threshold2)
+    elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
     disp('Image is a face but not in the database');
     elseif (rank1_distance > threshold2)
     disp('Image is not a face');
