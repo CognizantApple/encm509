@@ -1,0 +1,7 @@
+FR3D0001
+DESCRIPTION     FaceGen Default Model V3
+DEFAULTLOAD     skin_hi eyeL_hi eyeR_hi sock teethLower teethUpper tongue 
+XFMROTANGLE     1.571158
+XFMROTAXIS      0.004531 0.004127 0.999981 
+XFMSCALE        0.999925
+XFMTRANS        126.958556 127.496323 127.637623 

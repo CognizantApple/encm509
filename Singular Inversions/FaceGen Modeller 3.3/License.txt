@@ -1,0 +1,111 @@
+FACEGEN MODELLER LICENSE AGREEMENT
+
+IMPORTANT!  The Software you seek to install is licensed only on the condition that you (referred to as "YOU" or "CUSTOMER") agree with Singular Inversions Inc. (referred to as "LICENSOR") to the terms and conditions set forth below.  PLEASE CAREFULLY READ THE TERMS OF THIS SOFTWARE LICENSE AGREEMENT AND FOLLOW THE INSTRUCTIONS TO CUSTOMER SET OUT BELOW.
+
+INSTRUCTIONS TO CUSTOMER:
+
+IF YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT, THEN YOU SHOULD CLICK ON THE BUTTON AT THE BOTTOM OF THIS DIALOG BOX LABELED "YES", AFTER WHICH THE LICENSED MATERIALS WILL BE INSTALLED ON YOUR COMPUTER.  BY CLICKING ON THE "YES" BUTTON AT THE BOTTOM OF THIS DIALOG BOX, YOU WILL BE ENTERING INTO A LEGALLY BINDING AGREEMENT GOVERNING YOUR USE OF THE LICENSED MATERIALS.
+
+IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, THEN YOU SHOULD CLICK ON THE BUTTON AT THE BOTTOM OF THIS DIALOG BOX LABELED "NO", AFTER WHICH THE SET-UP AND INSTALLATION PROGRAM WILL TERMINATE WITHOUT THE LICENSED MATERIALS BEING INSTALLED ON YOUR COMPUTER.
+
+TERMS AND CONDITIONS OF LICENSE:
+
+LICENSOR grants to CUSTOMER a license to use the Software, Models and documentation (the Software, Models and documentation are referred to in this Agreement as "Licensed Materials"), under the following terms and conditions:
+
+1.	DEFINITIONS. As used in this Agreement:
+
+1.1	"Effective Date" means the date on which CUSTOMER clicks the "YES" button at the bottom of this dialog box and installs the Software.
+
+1.2	"Hardware" means any computer system owned or leased by CUSTOMER.
+
+1.3	"Software" means the FaceGen Modeller 3 software, in object-code form only, and related data files.
+
+1.4	"Models" means any representations of three-dimensional (3D) models residing in a computer, and any associated texture maps (image representations residing in a computer and used to 'color' the surface of a 3D model) created using Software or downloaded from LICENSOR's web site, or any modification thereof.
+
+2.	TERM; TERMINATION
+
+2.1	This Agreement is effective from the Effective Date. This Agreement may be terminated by CUSTOMER at any time by destroying the Licensed Materials, together with all copies thereof. It will also terminate automatically and without notice (a) pursuant to Section 3.5 in the case of an evaluation license, and (b) if CUSTOMER fails to comply with any term or condition of this Agreement.
+
+2.2	Within 10 days after termination, CUSTOMER must permanently erase the Licensed Materials from all Hardware and/or media.
+
+3.	EVALUATION LICENSE GRANT
+
+3.1	Unless CUSTOMER acquires a paid license for the Licensed Materials under Section 4 of this Agreement, LICENSOR grants to CUSTOMER a non-exclusive, non-transferable license to use the Software and Models under the terms of this agreement (excluding Section 4) without charge, for the purposes of evaluation only.
+
+3.2	CUSTOMER will not, and will not authorize any third party to; (a) rent, lease, sell, transfer or sublicense the Software or Models, or (b) electronically transfer the Software or Models to any third party.
+
+3.3	CUSTOMER will not, and will not authorize any third party to reverse engineer, disassemble, create derivative works from and/or modify the Software.
+
+3.4	CUSTOMER will only use the Licensed Materials in a manner that complies with all applicable laws in the jurisdiction in which CUSTOMER uses the Licensed Materials, including, but not limited to, applicable restrictions concerning copyright and other intellectual property rights.
+
+3.5	The Evaluation License will terminate immediately upon CUSTOMER acquiring a Paid License for the Licensed Materials pursuant to Section 4 of this Agreement.
+
+4.	PAID LICENSE GRANT
+
+4.1	In consideration of the payment of the applicable license fee, LICENSOR grants to CUSTOMER a non-exclusive, non-transferable license to use the Software and Models under the terms of this agreement (excluding Section 3).
+
+4.2	CUSTOMER may copy the Software for back-up and archival purposes, provided that any copy must contain all of the original Software’s proprietary notices.
+
+4.3	The Software may be used by any number of people and may be freely moved between different Hardware so long as there is no possibility of it being used at one location while the same copy is at the same time being used at another location.
+
+4.4	CUSTOMER will not, and will not authorize any third party to; (a) rent, lease, sell, transfer or sublicense the Software, or (b) electronically transfer the Software to any third party.
+
+4.5	CUSTOMER will not, and will not authorize any third party to reverse engineer, disassemble, create derivative works from and/or modify the Software.
+
+4.6	CUSTOMER will not, and will not authorize any third party to; (a) rent, lease, sell, transfer or sublicense Models, or (b) electronically transfer Models to any third party, except as specifically authorized by Sections 4.7 and 4.8.
+
+4.7	CUSTOMER may license, sell or distribute files in the FaceGen ‘.fg’ format created by Software.
+
+4.8	CUSTOMER may license, sell or distribute rendered images or video derived from Models.
+
+4.9	LICENSOR will have the right to disclose CUSTOMER’s corporate name, as a customer of LICENSOR, to third parties including listing CUSTOMER’s corporate name in LICENSORs web site.
+
+4.10	LICENSOR will remove any public references to CUSTOMER’s corporate name, as a customer of LICENSOR, within 5 business days of CUSTOMER informing licensor by email or in writing that CUSTOMER wishes to remain anonymous as a customer to LICENSOR.
+
+4.11	CUSTOMER will only use the Licensed Materials in a manner that complies with all applicable laws in the jurisdiction in which CUSTOMER uses the Licensed Materials, including, but not limited to, applicable restrictions concerning copyright and other intellectual property rights.
+
+5.	OWNERSHIP; NOTICE
+
+5.1	The Licensed Materials, and all intellectual property contained therein, are and will remain the sole and exclusive property of LICENSOR and its licensors and are protected by Canadian copyright laws and international copyright treaty provisions. Nothing in this Agreement will give CUSTOMER any proprietary right in or to any Licensed Materials.
+
+5.2	CUSTOMER shall include any proprietary notices embodied in the Software on any copy of the Software in any form, in whole or in part.
+
+6.	SUPPORT
+
+6.1	LICENSOR shall have no obligation to provide technical support for the Licensed Materials.
+
+7.	LIMITED WARRANTIES AND DISCLAIMER OF WARRANTIES
+
+7.1	THE LICENSED MATERIALS ARE PROVIDED AS-IS AND WITHOUT WARRANTY OR CONDITION OF ANY KIND.  TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, LICENSOR DISCLAIMS ALL  WARRANTIES AND CONDITIONS, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.  ANY STATEMENTS OR REPRESENTATIONS MADE BY ANY OTHER PERSON OR FIRM ARE VOID. THIS DISCLAIMER OF WARRANTIES CONSTITUTES AN ESSENTIAL PART OF THIS AGREEMENT.
+
+8.	LIMITATIONS OF LIABILITY
+
+8.1	CUSTOMER ASSUMES ALL RISK AS TO THE SELECTION, USE, CONDITION, PERFORMANCE AND QUALITY OF THE LICENSED MATERIALS.
+
+8.2	IN NO EVENT WILL LICENSOR OR ANY OTHER PARTY WHO HAS BEEN INVOLVED IN THE CREATION, PRODUCTION OR DELIVERY OF THE SOFTWARE BE LIABLE FOR SPECIAL, DIRECT, INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES, INCLUDING LOSS OF PROFITS, LOSS OF DATA OR INABILITY TO USE ALL OR ANY PART OF THE LICENSED MATERIALS, EVEN IF LICENSOR OR SUCH OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+8.3	Some states and/or countries do not allow limitations on how long an implied warranty lasts and some states and/or countries do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation and exclusion may not apply to YOU. This warranty gives CUSTOMER specific legal rights, and CUSTOMER may also have other rights which vary from state to state and/or country to country.
+
+9.	GENERAL
+
+9.1	Any rights not expressly granted in this agreement are specifically and exclusively reserved to and by LICENSOR.
+
+9.2	If any provision or portion of a provision of this Agreement is determined to be invalid or unenforceable, then it will be deemed omitted and the remaining provisions of this Agreement will remain in full force and effect. 
+
+9.3	This Agreement is governed by and construed in accordance with the laws of the Province of British Columbia and the laws of Canada applicable therein, excluding (a)  that body of law known as conflicts of law, and (b)  the International Sale of Goods Act (British Columbia) and the United Nations Convention on Contracts for the Sale of Goods.
+
+9.4	This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof, and supersedes in their entirety any and all prior agreements, representations, statements and undertakings, whether written or oral, with respect to such subject matter.
+
+9.5	Neither party hereto shall be liable in any manner for failure or delay in fulfillment of all or part of this Agreement directly or indirectly owing to any causes or circumstances beyond its reasonable control. 
+
+9.6	CUSTOMER may not assign or transfer all or part of this Agreement to any third party without the express written approval of LICENSOR. 
+
+9.7	Any dispute between the parties relating to this Agreement or the Licensed Materials which cannot be resolved through mutual negotiation will be resolved by arbitration by a single arbitrator in Vancouver, British Columbia, Canada in accordance with the rules of the British Columbia International Commercial Arbitration Centre.  Any such arbitration must be filed no later than one year from the date the dispute arose.  CUSTOMER agrees that the dispute resolution procedure set forth in this paragraph is the sole and exclusive means for resolving any dispute between the parties relating to this Agreement or the Licensed Materials.
+
+10.	EXPORT CONTROL REGULATIONS
+
+CUSTOMER acknowledges and agrees that no part of the Licensed Materials or underlying information or technology may be downloaded or otherwise exported or re-exported (a) into (or to a national or resident of) Cuba, Iraq, Libya, the countries of the former Yugoslavia, North Korea, Iran, Syria or any other country to which the United States has embargoed goods; or (b) to anyone on the U.S. Treasury Department's List of Specially Designated Nationals or the U.S. Commerce Department's Table of Denial Orders.  CUSTOMER further represents and warrants that it is not located in, under the control of, or a national or resident of any such country or on any such list.
+
+11.	U.S. GOVERNMENT RESTRICTED RIGHTS
+
+The Licensed Materials are provided with RESTRICTED RIGHTS. The use, duplication, or disclosure by the Government is subject to restrictions as set forth in subdivision (c)(1)(ii) of The Rights in Technical Data and Computer Software clause at 52.227-7013. The contractor/ manufacturer of this Software is: Singular Inversions Inc., Vancouver, British Columbia, CANADA.
