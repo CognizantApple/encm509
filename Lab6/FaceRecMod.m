@@ -54,8 +54,9 @@ if(step2)
         for i=1:M
             % Select the set of images for training and testing:
             db = Image_Sets{j};
-            test_img = {db{i}};
-            db(i) = []; % This deletes the image we're testing with from the db.
+            idx = i;
+            test_img = {db{idx}};
+            db(idx) = []; % This deletes the image we're testing with from the db.
             [distances] = FacialRecognition(db, test_img);
             max_distance = max(distances{1}); % maximum eucledian distance
             min_distance = min(distances{1}); % minimum eucledian distance
@@ -67,12 +68,15 @@ if(step2)
     min_distances = min_distances';
     max_distances = max_distances';
 
+    mean_min = mean(min_distances);
+    std_min = std(min_distances);
+    
     % Find the mean and std of the max distances:
     mean_max = mean(max_distances);
     std_max = std(max_distances);
-    threshold1 = mean_max - std_max; % If you *add* std_max, it ends up being way too high...
+    threshold1 = mean_min + norminv(0.975) * std_min / sqrt(2*M); % If you *add* std_max, it ends up being way too high...
 else
-    threshold1 = 4.300778919345922e+04; % Same value as above
+    threshold1 = 4.330041409267599e+04; % Same value as above
 end
 %%%%%%%%%%%%%%% STEP 3 - FIND THRESHOLD #2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -90,12 +94,16 @@ if(step3)
         imposter_min_distances = [imposter_min_distances; min(imposter_distances{i})]; % minimum eucledian distance
     end
 
+    % Find the mean and std of the min distances:
+    mean_min = mean(imposter_min_distances);
+    std_min = std(imposter_min_distances);
+    
     % Find the mean and std of the max distances:
     mean_max = mean(imposter_max_distances);
     std_max = std(imposter_max_distances);
-    threshold2 = mean_max + std_max;
+    threshold2 = mean_min + norminv(0.975) * std_min / sqrt(size(imposter_distances, 2));
 else
-    threshold2 = 4.456727248959021e+04;
+    threshold2 = 4.345588067296708e+04;
 end
 
 %%%%%%%%%%%%%%% STEP 4 - EVALUATE PERFORMANCE OF THRESHOLDS %%%%%%%%%%%%%%%%%
@@ -115,10 +123,15 @@ for j=1:2
 end
 
 disp('For faces in the database:');
+rank1_distances = []
 for i=1:size(in_db_distances, 2)
-    rank1_distance = min(in_db_distances{i});
+    [rank1_distance, rank1_index] = min(in_db_distances{i});
+    rank1_distances = [rank1_distances, rank1_distance];
+    
+    class = classes(floor((rank1_index - 1) / 9) + 1);
+    
     if (rank1_distance <= threshold1)
-    disp('Image is in the database');
+    disp(strcat('Image is in the database, it belongs to class ', " " ,class));
     elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
     disp('Image is a face but not in the database');
     elseif (rank1_distance > threshold2)
