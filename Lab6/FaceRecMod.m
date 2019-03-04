@@ -42,6 +42,10 @@ for i=1:M
         Image_Sets{j}{i} = img;
     end
 end
+
+% Grab the default image size
+[default_row, default_col, channels]=size(img); % get the number of rows (N1) and columns (N2)
+
 %%%%%%%%%%%%%%% STEP 2 - FIND THRESHOLD #1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Classes A and B are in the DB, and we want to 9-fold train each of those sets:
@@ -70,7 +74,7 @@ if(step2)
 
     mean_min = mean(min_distances);
     std_min = std(min_distances);
-    
+
     % Find the mean and std of the max distances:
     mean_max = mean(max_distances);
     std_max = std(max_distances);
@@ -78,6 +82,7 @@ if(step2)
 else
     threshold1 = 4.330041409267599e+04; % Same value as above
 end
+
 %%%%%%%%%%%%%%% STEP 3 - FIND THRESHOLD #2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 step3 = true;
@@ -97,7 +102,7 @@ if(step3)
     % Find the mean and std of the min distances:
     mean_min = mean(imposter_min_distances);
     std_min = std(imposter_min_distances);
-    
+
     % Find the mean and std of the max distances:
     mean_max = mean(imposter_max_distances);
     std_max = std(imposter_max_distances);
@@ -108,95 +113,164 @@ end
 
 %%%%%%%%%%%%%%% STEP 4 - EVALUATE PERFORMANCE OF THRESHOLDS %%%%%%%%%%%%%%%%%
 
-% Perform testing with the two classes that belong to the database.
-in_db_distances = {};
-for j=1:2
-    for i=1:M
-        % Select the set of images for training and testing:
-        db = [Image_Sets{1} Image_Sets{2}];
-        test_idx = M*(j-1) + i;
-        test_img = {db{test_idx}};
-        db(test_idx) = []; % This deletes the image we're testing with from the db.
-        [distances] = FacialRecognition(db, test_img);
-        in_db_distances{M*(j-1) + i} = distances{1};
+step4 = true;
+if(step4)
+    % Perform testing with the two classes that belong to the database.
+    in_db_distances = {};
+    for j=1:2
+        for i=1:M
+            % Select the set of images for training and testing:
+            db = [Image_Sets{1} Image_Sets{2}];
+            test_idx = M*(j-1) + i;
+            test_img = {db{test_idx}};
+            db(test_idx) = []; % This deletes the image we're testing with from the db.
+            [distances] = FacialRecognition(db, test_img);
+            in_db_distances{M*(j-1) + i} = distances{1};
+        end
     end
-end
 
-disp('For faces in the database:');
-rank1_distances = []
-for i=1:size(in_db_distances, 2)
-    [rank1_distance, rank1_index] = min(in_db_distances{i});
-    rank1_distances = [rank1_distances, rank1_distance];
-    
-    class = classes(floor((rank1_index - 1) / 9) + 1);
-    
-    if (rank1_distance <= threshold1)
-    disp(strcat('Image is in the database, it belongs to class ', " " ,class));
-    elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
-    disp('Image is a face but not in the database');
-    elseif (rank1_distance > threshold2)
-    disp('Image is not a face');
-    end
-end
+    disp('For faces in the database:');
+    rank1_distances = []
+    for i=1:size(in_db_distances, 2)
+        [rank1_distance, rank1_index] = min(in_db_distances{i});
+        rank1_distances = [rank1_distances, rank1_distance];
 
-disp('For faces NOT in the database:');
-% note that we can still use imposter_distances here.
-for i=1:size(imposter_min_distances, 1)
-    rank1_distance = imposter_min_distances(i);
-    if (rank1_distance <= threshold1)
-    disp('Image is in the database');
-    elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
-    disp('Image is a face but not in the database');
-    elseif (rank1_distance > threshold2)
-    disp('Image is not a face');
-    end
-end
+        class = classes(floor((rank1_index - 1) / 9) + 1);
 
-%RANK-3 Approach, we already have all the scores we need: in_db_distances and imposter_distances
-%for this.
-ranks = 3;
-disp('For faces in the database, using a rank-3 approach:');
-for i=1:size(in_db_distances, 2)
-    distances = in_db_distances{i};
-    
-    winner = RankNMatch(distances, ranks, threshold1, threshold2);
-    
-    if (winner == 1)
-        disp('Image is in the database');
-    elseif (winner == 2)
+        if (rank1_distance <= threshold1)
+        disp(strcat('Image is in the database, it belongs to class ', " " ,class));
+        elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
         disp('Image is a face but not in the database');
-    elseif (winner == 3)
+        elseif (rank1_distance > threshold2)
         disp('Image is not a face');
+        end
+    end
+
+    disp('For faces NOT in the database:');
+    % note that we can still use imposter_distances here.
+    for i=1:size(imposter_min_distances, 1)
+        rank1_distance = imposter_min_distances(i);
+        if (rank1_distance <= threshold1)
+        disp('Image is in the database');
+        elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
+        disp('Image is a face but not in the database');
+        elseif (rank1_distance > threshold2)
+        disp('Image is not a face');
+        end
+    end
+
+    %RANK-3 Approach, we already have all the scores we need: in_db_distances and imposter_distances
+    %for this.
+    ranks = 3;
+    disp('For faces in the database, using a rank-3 approach:');
+    for i=1:size(in_db_distances, 2)
+        distances = in_db_distances{i};
+
+        winner = RankNMatch(distances, ranks, threshold1, threshold2);
+
+        if (winner == 1)
+            disp('Image is in the database');
+        elseif (winner == 2)
+            disp('Image is a face but not in the database');
+        elseif (winner == 3)
+            disp('Image is not a face');
+        end
+    end
+
+    disp('For faces not in the database, using a rank-3 approach:');
+    for i=1:size(imposter_distances, 2)
+        distances = imposter_distances{i};
+
+        winner = RankNMatch(distances, ranks, threshold1, threshold2);
+
+        if (winner == 1)
+            disp('Image is in the database');
+        elseif (winner == 2)
+            disp('Image is a face but not in the database');
+        elseif (winner == 3)
+            disp('Image is not a face');
+        end
     end
 end
 
-disp('For faces not in the database, using a rank-3 approach:');
-for i=1:size(imposter_distances, 2)
-    distances = imposter_distances{i};
-    
-    winner = RankNMatch(distances, ranks, threshold1, threshold2);
-    
-    if (winner == 1)
-        disp('Image is in the database');
-    elseif (winner == 2)
-        disp('Image is a face but not in the database');
-    elseif (winner == 3)
-        disp('Image is not a face');
+%%%%%%%%%%%%%%% STEP 5 - EVALUATE SYNTHETIC FACES %%%%%%%%%%%%%%%%%%%%%%%%%
+
+step5 = true;
+if(step5)
+    synth_count = 21;  % Number of synthetic images
+
+
+    % Create datatype for holding images
+    synth_images = {};
+
+    current_file_path = pwd;
+    path = fullfile(current_file_path, 'FaceGen', '\');
+    for i = 1:synth_count
+        str=strcat(path,int2str(i),'.bmp'); % concatenates strings that form the name of the image
+        img=imread(str);
+        % Resize the image to be relatively well aligned with our images.
+        img = imresize(img, [340, 340]);
+        img = imcrop(img, [30, 3, (default_col-1), (default_row-1)]);
+        synth_images{i} = img;
+        % str=strcat(path,'synthetic',int2str(i),'.jpg');
+        % eval('imwrite(img,str)');
+    end
+
+    % Perform testing with synthetic images
+    synthetic_distances = {};
+    % Select the set of images for training and testing:
+    db = [Image_Sets{1} Image_Sets{2}];
+    [synthetic_distances] = FacialRecognition(db, synth_images);
+
+    disp('For synthetic faces:');
+    rank1_distances = [];
+    for i=1:size(synthetic_distances, 2)
+        [rank1_distance, rank1_index] = min(synthetic_distances{i});
+        rank1_distances = [rank1_distances, rank1_distance];
+
+        class = classes(floor((rank1_index - 1) / 9) + 1);
+
+        if (rank1_distance <= threshold1)
+            disp(strcat('Image is in the database, it belongs to class ', " " ,class));
+        elseif (rank1_distance > threshold1 && rank1_distance <= threshold2)
+            disp('Image is a face but not in the database');
+        elseif (rank1_distance > threshold2)
+            disp('Image is not a face');
+        end
+    end
+    rank1_distances = rank1_distances';
+
+    %RANK-3 Approach, we already have all the scores we need: in_db_distances and imposter_distances
+    %for this.
+    ranks = 3;
+    disp('For synthetic faces, using a rank-3 approach:');
+    for i=1:size(synthetic_distances, 2)
+        distances = synthetic_distances{i};
+
+        winner = RankNMatch(distances, ranks, threshold1, threshold2);
+
+        if (winner == 1)
+            disp('Image is in the database');
+        elseif (winner == 2)
+            disp('Image is a face but not in the database');
+        elseif (winner == 3)
+            disp('Image is not a face');
+        end
     end
 end
 
 function [winner] = RankNMatch(distances, N, threshold1, threshold2)
     distances = sort(distances);
-    
+
     votes = zeros(3, 1);
-    
+
     for j = 1:N
         if j > size(distances)
             break;
         end
-        
+
         distance = distances(j);
-        
+
         if (distance <= threshold1)
             votes(1) = votes(1) + 1;
         elseif (distance <= threshold2)
@@ -205,7 +279,7 @@ function [winner] = RankNMatch(distances, N, threshold1, threshold2)
             votes(3) = votes(3) + 1;
         end
     end
-    
+
     %now to analyze the votes
     %find all the possible winners
     top_votes = max(votes);
@@ -215,10 +289,10 @@ function [winner] = RankNMatch(distances, N, threshold1, threshold2)
             top_indexes = [top_indexes, j];
         end
     end
-    
+
     %now find the mean index of categories that scores the maximum votes
     mean_index = mean(top_indexes);
-    
+
     %now find the index that is closest to the mean that also scored the
     %max score
     winner = 0;
@@ -234,7 +308,7 @@ end
 %%% Since the test database has to compute it's mean image and eigenvector every time,
 %%% We'll just run the whole program over when we want to change the db we're wanting to use.
 %%% image_db and test_images are cell arrays of rgb images.
-function [distances] = FacialRecognition(image_db, test_images, thres1, thres2)
+function [distances] = FacialRecognition(image_db, test_images)
 
     distances = {};
 
