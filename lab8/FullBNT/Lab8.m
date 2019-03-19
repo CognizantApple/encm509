@@ -42,3 +42,17 @@ marg = marginal_nodes(engine, I);
 disp(' EXERCISE 2: ');
 marg.T % returns the value P (Influenza|Cold = True, Fever = True),
 marg.T(2) % returns the value P (Influenza = True|Cold = True, Fever = True)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCISE 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+evidence = cell(1,N);
+[engine, loglik] = enter_evidence(engine, evidence); % no evidence
+m = marginal_nodes(engine, [I C F]); %it returns m as a structure.
+%Its T field is a 3-dimensional array that contains
+%joint probability on the specified nodes
+
+disp(' EXERCISE 3: ');
+m.T(2,2,2)
+m.T(1,2,2)
+
+
+
