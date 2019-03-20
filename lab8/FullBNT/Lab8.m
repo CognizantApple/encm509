@@ -51,8 +51,54 @@ m = marginal_nodes(engine, [I C F]); %it returns m as a structure.
 %joint probability on the specified nodes
 
 disp(' EXERCISE 3: ');
+m.T(1,1,2)
 m.T(2,2,2)
 m.T(1,2,2)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCISE 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+N2 = 4;
 
+%generate training data
+nsamples=30;
+samples = cell(N2, nsamples);
+for i=1:nsamples
+    samples(:,i) = sample_bnet(bnet);
+end
+data = cell2num(samples);
 
+%define the trainable network
+W2 = 1; I2 = 2; C2 = 3; F2 = 4;
+
+node_sizes = ones(1,N2);
+node_sizes(1,1) = 2;
+node_sizes(1,2)= 2;
+node_sizes(1,3) = 2;
+node_sizes(1,4) = 2;
+
+order = [W2 I2 C2 F2];
+max_fan_in = 2;
+dag2 = learn_struct_K2(data, node_sizes, order, 'max_fan_in', max_fan_in);
+
+bnet2 = mk_bnet(dag2, node_sizes);
+seed = 4;
+rand('state', seed);
+bnet2.CPD{W2} = tabular_CPD(bnet2, W2);
+bnet2.CPD{C2} = tabular_CPD(bnet2, C2);
+bnet2.CPD{I2} = tabular_CPD(bnet2, I2);
+bnet2.CPD{F2} = tabular_CPD(bnet2, F2);
+
+bnet2 = learn_params(bnet2, data);
+
+CPT3_original = cell(1,N);
+for i=1:N
+    S=struct(bnet.CPD{i});
+    CPT3_original{i}=S.CPT;
+end
+
+CPT3_trained = cell(1,N2);
+for i=1:N2
+    S=struct(bnet2.CPD{i});
+    CPT3_trained{i}=S.CPT;
+end
+
+disp(' EXERCISE 7: ');
