@@ -15,7 +15,7 @@ onodes=[]; %Specifying which nodes are the observed ones (here none)
 bnet=mk_bnet(dag,node_sizes,'discrete',discrete_nodes,'observed',onodes);
 
 bnet.CPD{W} = tabular_CPD(bnet, W, [0.5 0.5]);
-bnet.CPD{C}= tabular_CPD(bnet, C, [0.8 0.2 0.2 0.8]);
+bnet.CPD{C} = tabular_CPD(bnet, C, [0.8 0.2 0.2 0.8]);
 bnet.CPD{I} = tabular_CPD(bnet, I, [0.5 0.9 0.5 0.1]);
 bnet.CPD{F} = tabular_CPD(bnet, F, [1 0.1 0.1 0.01 0 0.9 0.9 0.99]);
 
