@@ -13,14 +13,14 @@ disp('                    using GMM');
 disp('-------------------------------------------------------------------');
 
 %-----------reading in the training data----------------------------------
-training_data1=wavread('01_train.wav');
-training_data2=wavread('02_train.wav');
-training_data3=wavread('03_train.wav');
+training_data1=audioread('01_train.wav');
+training_data2=audioread('02_train.wav');
+training_data3=audioread('03_train.wav');
 
 %------------reading in the test data-----------------------------------
-[testing_data1,Fs,nbits]=wavread('01_test.wav');
-testing_data2=wavread('02_test.wav');
-testing_data3=wavread('03_test.wav');
+[testing_data1,Fs]=audioread('01_test.wav');
+testing_data2=audioread('02_test.wav');
+testing_data3=audioread('03_test.wav');
 
 disp('Completed reading taining and testing data (Press any key to continue)');
 pause;
