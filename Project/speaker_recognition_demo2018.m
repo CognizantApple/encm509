@@ -97,4 +97,42 @@ disp('-------------------------------------------------------------------');
 A
 disp('-------------------------------------------------------------------');
 % confusion matrix in color
-figure; imagesc(A); colorbar;
+figure; imagesc(A); colorbar; xlabel('Test Speaker'); ylabel('Speaker in DB');
+
+disp('-------------------------------------------------------------------');
+disp('                    Testing Imposter Against DB');
+disp('-------------------------------------------------------------------');
+
+testing_data4=audioread('04_test.wav');
+disp('Completed reading imposter test data (Press any key to continue)');
+pause;
+
+%-------------feature extraction------------------------------------------
+testing_features4=melcepst(testing_data4,Fs);
+
+disp('Completed feature extraction for the imposter sample data (Press any key to continue)');
+pause;
+
+%-------------testing against the input data------------------------------
+%testing against the first model
+[lYM,lY]=lmultigauss(testing_features4', mu_train1, sigma_train1, c_train1);
+B(1,1)=mean(lY);
+
+%testing against the second model
+[lYM,lY]=lmultigauss(testing_features4', mu_train2, sigma_train2, c_train2);
+B(2,1)=mean(lY);
+
+%testing against the third model
+[lYM,lY]=lmultigauss(testing_features4', mu_train3, sigma_train3, c_train3);
+B(3,1)=mean(lY);
+
+
+disp('Results in the form of confusion matrix for comparison with imposter');
+disp('Each row i represents the training recording of Speaker i, compared');
+disp('with the recording of the imposter.');
+disp('-------------------------------------------------------------------');
+B
+disp('-------------------------------------------------------------------');
+% confusion matrix in color
+figure; imagesc(B); colorbar; xlabel('Imposter'); ylabel('Speaker in DB');
+
