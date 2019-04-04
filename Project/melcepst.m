@@ -72,7 +72,7 @@ if nargin<2 fs=11025; end
 if nargin<3 w='M'; end
 if nargin<4 nc=12; end
 if nargin<5 p=floor(3*log(fs)); end
-if nargin<6 n=pow2(floor(log2(0.03*fs))); end
+if nargin<6 n=pow2(floor(log2(0.06*fs))); end
 if nargin<9
    fh=0.5;   
    if nargin<8

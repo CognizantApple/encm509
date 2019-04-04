@@ -4,7 +4,8 @@
 % Modifie by S. Yanushkevich
 
 %define the number of Gaussian invariants - could be modified
-No_of_Gaussians=10;
+No_of_Gaussians=20;
+filter_0_feature_vectors = true;
 %Reading in the data 
 %Use wavread from matlab 
 disp('-------------------------------------------------------------------');
@@ -42,6 +43,15 @@ testing_features3=melcepst(testing_data3,Fs);
 
 disp('Completed feature extraction for the testing data (Press any key to continue)');
 pause;
+
+if(filter_0_feature_vectors)
+    training_features1 = filter_features(training_features1);
+    training_features2 = filter_features(training_features2);
+    training_features3 = filter_features(training_features3);
+    testing_features1  = filter_features(testing_features1);
+    testing_features2  = filter_features(testing_features2);
+    testing_features3  = filter_features(testing_features3);
+end
 
 %-------------training the input data using GMM-------------------------
 %training input data, and creating the models required
@@ -109,6 +119,9 @@ pause;
 
 %-------------feature extraction------------------------------------------
 testing_features4=melcepst(testing_data4,Fs);
+if(filter_0_feature_vectors)
+    testing_features4 = filter_features(testing_features4);
+end
 
 disp('Completed feature extraction for the imposter sample data (Press any key to continue)');
 pause;
@@ -136,3 +149,8 @@ disp('-------------------------------------------------------------------');
 % confusion matrix in color
 figure; imagesc(B); colorbar; xlabel('Imposter'); ylabel('Speaker in DB');
 
+
+%%% Remove any rows of DCT coefficients that are just all 0s.
+function filtered_features=filter_features(feature_vectors)
+    filtered_features = feature_vectors(any(feature_vectors,2),:);
+end
