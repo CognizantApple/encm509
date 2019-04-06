@@ -6,8 +6,8 @@
 %define the number of Gaussian invariants - could be modified
 No_of_Gaussians=20;
 filter_0_feature_vectors = true;
-%Reading in the data 
-%Use wavread from matlab 
+%Reading in the data
+%Use wavread from matlab
 disp('-------------------------------------------------------------------');
 disp('                    Speaker recognition Demo');
 disp('                    using GMM');
@@ -73,7 +73,7 @@ pause;
 disp('Completed Training ALL Models  (Press any key to continue)');
 
 pause;
-%-------------------------testing against the input data-------------- 
+%-------------------------testing against the input data--------------
 
 %testing against the first model
 [lYM,lY]=lmultigauss(testing_features1', mu_train1,sigma_train1,c_train1);

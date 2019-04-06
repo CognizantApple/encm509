@@ -72,9 +72,9 @@ if nargin<2 fs=11025; end
 if nargin<3 w='M'; end
 if nargin<4 nc=12; end
 if nargin<5 p=floor(3*log(fs)); end
-if nargin<6 n=pow2(floor(log2(0.06*fs))); end
+if nargin<6 n=pow2(floor(log2(0.06*fs))); end % Frame width of 2048 samples
 if nargin<9
-   fh=0.5;   
+   fh=0.5;
    if nargin<8
      fl=0;
      if nargin<7
@@ -145,7 +145,7 @@ elseif any(w=='d')
   vx(1:8,:)=[];
   c=[c vx];
 end
- 
+
 if nargout<1
    [nf,nc]=size(c);
    t=((0:nf-1)*inc+(n-1)/2)/fs;
